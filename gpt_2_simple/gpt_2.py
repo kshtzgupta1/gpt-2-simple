@@ -168,6 +168,7 @@ def finetune(sess,
 
     context = tf.compat.v1.placeholder(tf.int32, [batch_size, None])
     output = model.model(hparams=hparams, X=context)
+    tf.compat.v1.add_to_collection('checkpoints', output)
     loss = tf.reduce_mean(
         input_tensor=tf.nn.sparse_softmax_cross_entropy_with_logits(
             labels=context[:, 1:], logits=output['logits'][:, :-1]))
